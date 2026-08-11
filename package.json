@@ -13,7 +13,7 @@
     "start:dev": "nest start nestar-api --watch",
     "start:dev:batch": "nest start nestar-batch --watch",
     "start:debug": "nest start nestar-api --debug --watch",
-    "start:prod": "node dist/apps/nestar-api/main",
+    "start:prod": "NODE_ENV=production node dist/apps/nestar-api/main",
     "start:prod:batch": "node dist/apps/nestar-batch/main",
     "start:batch": "nest start nestar-batch --watch",
     "start:batch:prod": "node dist/apps/nestar-batch/main",
