@@ -1,32 +1,35 @@
-import { Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { MemberService } from './member.service';
+import { UsePipes, ValidationPipe } from '@nestjs/common';
+import { LoginInput, MemberInput } from '../../libs/dto/member/member.input';
 
 @Resolver()
 export class MemberResolver {
-    constructor(private readonly memberService: MemberService) { }
+	constructor(private readonly memberService: MemberService) {}
 
-    @Mutation(() => String)
-    public async signup(): Promise<string> {
-        console.log('Mutation: Signup');
-        return this.memberService.signup();
-    }
+	@Mutation(() => String)
+	@UsePipes(ValidationPipe)
+	public async signup(@Args('input') input: MemberInput): Promise<string> {
+		console.log('Mutation: signup');
+		console.log('input:', input);
+		return this.memberService.signup();
+	}
 
-    @Mutation(() => String)
-    public async login(): Promise<string> {
-        console.log('Mutation: Login');
-        return this.memberService.login();
-    }
+	@Mutation(() => String)
+	public async login(@Args('input') input: LoginInput): Promise<string> {
+		console.log('Mutation: login');
+		return this.memberService.login();
+	}
 
-    @Mutation(() => String)
-    public async updateMember(): Promise<string> {
-        console.log('Mutation: Update Member');
-        return this.memberService.updateMember();
-    }
+	@Mutation(() => String)
+	public async updateMember(): Promise<string> {
+		console.log('Mutation: Update Member');
+		return this.memberService.updateMember();
+	}
 
-    @Query(() => String)
-    public async getMember(): Promise<string> {
-        console.log('Query: Get Member');
-        return this.memberService.getMember();
-    }
+	@Query(() => String)
+	public async getMember(): Promise<string> {
+		console.log('Query: Get Member');
+		return this.memberService.getMember();
+	}
 }
-
