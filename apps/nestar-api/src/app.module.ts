@@ -16,6 +16,14 @@ import { DatabaseModule } from './database/database.module';
       playground: true,
       uploads: false,
       autoSchemaFile: true,
+      formatError: (error) => {
+        const graphQLFormattedError = {
+          code: error.extensions?.code || 'INTERNAL_SERVER_ERROR',
+          message: error?.extensions?.exception?.response?.message || error?.extensions?.response?.message || error.message || 'Internal server error',
+        };
+        console.log('GraphQL Error:', graphQLFormattedError);
+        return graphQLFormattedError;
+      }
     }),
     ComponentsModule,
     DatabaseModule,
