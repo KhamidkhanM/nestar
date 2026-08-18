@@ -16,9 +16,12 @@ export class MemberService {
             const result = await this.memberModel.create(input);
             // TODO: Auth via TOKEN
             return result;
-        } catch (err) {
+        } catch (err: any) {
             console.log('Error, Service.model', err instanceof Error ? err.message : err);
-            throw new BadRequestException(Message.USED_MEMBER_NICK_OR_PHONE);
+            if (err?.code === 11000) {
+                throw new BadRequestException(Message.USED_MEMBER_NICK_OR_PHONE);
+            }
+            throw new InternalServerErrorException(err);
         }
     }
 
