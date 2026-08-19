@@ -12,11 +12,10 @@ export class MemberService {
     constructor(@InjectModel('Member') private readonly memberModel: Model<Member>, private authService: AuthService) { }
 
     public async signup(input: MemberInput): Promise<Member> {
-        // TODO: HASH Password
         input.memberPassword = await this.authService.hashPassword(input.memberPassword);
         try {
             const result = await this.memberModel.create(input);
-            // TODO: Auth via TOKEN
+            result.accessToken = await this.authService.createToken(result);
             return result;
         } catch (err: any) {
             console.log('Error, Service.model', err instanceof Error ? err.message : err);
@@ -42,6 +41,7 @@ export class MemberService {
 
         const isMatch = await this.authService.comparePasswords(memberPassword, response.memberPassword as string);
         if (!isMatch) throw new InternalServerErrorException(Message.WRONG_PASSWORD);
+        response.accessToken = await this.authService.createToken(response);
 
         return response;
     }
