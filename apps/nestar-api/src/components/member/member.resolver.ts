@@ -84,6 +84,7 @@ export class MemberResolver {
         @Args('target') target: String,
     ): Promise<string> {
         console.log('Mutation: imageUploader');
+        console.log('filename =>', filename, 'mimetype =>', mimetype);
 
         if (!filename) throw new Error(Message.UPLOAD_FAILED);
         const validMime = validMimeTypes.includes(mimetype);
