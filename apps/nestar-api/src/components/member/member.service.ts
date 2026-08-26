@@ -52,7 +52,7 @@ export class MemberService {
     }
 
     public async updateMember(memberId: ObjectId, input: MemberUpdate): Promise<Member> {
-        const result: Member = await this.memberModel
+        const result = await this.memberModel
             .findOneAndUpdate(
                 {
                     _id: memberId,
@@ -139,7 +139,7 @@ export class MemberService {
     }
 
     public async updateMembersByAdmin(input: MemberUpdate): Promise<Member> {
-        const result: Member = await this.memberModel.findOneAndUpdate({ _id: input._id }, input, { new: true }).exec();
+        const result = await this.memberModel.findOneAndUpdate({ _id: input._id }, input, { new: true }).exec();
         if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
         return result;
     }
