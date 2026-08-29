@@ -7,7 +7,7 @@ import { ObjectId } from 'bson';
 export class PropertyUpdate {
     @IsNotEmpty()
     @Field(() => String)
-    _id: ObjectId;
+    _id!: ObjectId;
 
     @IsOptional()
     @Field(() => PropertyType, { nullable: true })
