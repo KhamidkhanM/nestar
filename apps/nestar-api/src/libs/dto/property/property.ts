@@ -1,12 +1,12 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import * as mongoose from 'mongoose';
+import { ObjectId } from 'bson';
 import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
 import { Member } from '../member/member';
 
 @ObjectType()
 export class Property {
     @Field(() => String)
-    _id!: mongoose.ObjectId;
+    _id!: ObjectId;
 
     @Field(() => PropertyType)
     propertyType!: PropertyType;
@@ -60,7 +60,7 @@ export class Property {
     propertyRent!: boolean;
 
     @Field(() => String)
-    memberId!: mongoose.ObjectId;
+    memberId!: ObjectId;
 
     @Field(() => Date, { nullable: true })
     soldAt?: Date;
