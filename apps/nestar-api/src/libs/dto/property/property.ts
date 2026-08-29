@@ -1,7 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { ObjectId } from 'bson';
 import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
-import { Member } from '../member/member';
+import { Member, TotalCounter } from '../member/member';
 
 @ObjectType()
 export class Property {
@@ -79,12 +79,6 @@ export class Property {
 
     @Field(() => Member, { nullable: true })
     memberData?: Member;
-}
-
-@ObjectType()
-export class TotalCounter {
-    @Field(() => Int, { nullable: true })
-    total!: number;
 }
 
 @ObjectType()

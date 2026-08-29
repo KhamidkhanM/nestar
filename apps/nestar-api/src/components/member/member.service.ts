@@ -93,7 +93,7 @@ export class MemberService {
         const match: T = { memberType: MemberType.AGENT, memberStatus: MemberStatus.ACTIVE };
         const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC };
 
-        if (text) match.memberNick = { $regax: new RegExp(text, 'i') };
+        if (text) match.memberNick = { $regex: new RegExp(text, 'i') };
         console.log('match', match);
 
         const result = await this.memberModel
@@ -117,9 +117,9 @@ export class MemberService {
         const match: T = {};
         const sort: T = { [input?.sort ?? 'createdAt']: input?.direction ?? Direction.DESC };
 
-        if (memberStatus) match.MemberStatus = memberStatus;
+        if (memberStatus) match.memberStatus = memberStatus;
         if (memberType) match.memberType = memberType;
-        if (text) match.memberNick = { $regax: new RegExp(text, 'i') };
+        if (text) match.memberNick = { $regex: new RegExp(text, 'i') };
         console.log('match', match);
 
         const result = await this.memberModel
@@ -138,8 +138,8 @@ export class MemberService {
         return result[0];
     }
 
-    public async updateMembersByAdmin(input: MemberUpdate): Promise<Member> {
-        const result = await this.memberModel.findOneAndUpdate({ _id: input._id }, input, { new: true }).exec();
+    public async updateMembersByAdmin(memberId: ObjectId, input: MemberUpdate): Promise<Member> {
+        const result = await this.memberModel.findOneAndUpdate({ _id: memberId }, input, { new: true }).exec();
         if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
         return result;
     }

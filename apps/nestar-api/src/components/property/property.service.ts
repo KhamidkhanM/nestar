@@ -78,15 +78,15 @@ export class PropertyService {
 
 
     public async updateProperty(memberId: ObjectId, input: PropertyUpdate): Promise<Property> {
-        let { propertyStatus, soldAt, deletedAt } = input;
+        const { propertyStatus } = input;
         const search: T = {
             _id: input._id,
             memberId: memberId,
             propertyStatus: PropertyStatus.ACTIVE,
         };
 
-        if (propertyStatus === PropertyStatus.SOLD) soldAt = moment().toDate();
-        else if (propertyStatus === PropertyStatus.DELETE) deletedAt = moment().toDate();
+        if (propertyStatus === PropertyStatus.SOLD) input.soldAt = moment().toDate();
+        else if (propertyStatus === PropertyStatus.DELETE) input.deletedAt = moment().toDate();
 
         const result = await this.propertyModel
             .findOneAndUpdate(search, input, {
@@ -95,7 +95,7 @@ export class PropertyService {
             .exec();
         if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
 
-        if (soldAt || deletedAt) {
+        if (input.soldAt || input.deletedAt) {
             await this.memberService.memberStatsEditor({
                 _id: memberId,
                 targetKey: 'memberProperties',
@@ -230,14 +230,14 @@ export class PropertyService {
     }
 
     public async updatePropertyByAdmin(input: PropertyUpdate): Promise<Property> {
-        let { propertyStatus, soldAt, deletedAt } = input;
+        const { propertyStatus } = input;
         const search: T = {
             _id: input._id,
             propertyStatus: PropertyStatus.ACTIVE,
         };
 
-        if (propertyStatus === PropertyStatus.SOLD) soldAt = moment().toDate();
-        else if (propertyStatus === PropertyStatus.DELETE) deletedAt = moment().toDate();
+        if (propertyStatus === PropertyStatus.SOLD) input.soldAt = moment().toDate();
+        else if (propertyStatus === PropertyStatus.DELETE) input.deletedAt = moment().toDate();
 
         const result = await this.propertyModel
             .findOneAndUpdate(search, input, {
@@ -246,7 +246,7 @@ export class PropertyService {
             .exec();
         if (!result) throw new InternalServerErrorException(Message.UPDATE_FAILED);
 
-        if (soldAt || deletedAt) {
+        if (input.soldAt || input.deletedAt) {
             await this.memberService.memberStatsEditor({
                 _id: result.memberId,
                 targetKey: 'memberProperties',
