@@ -7,8 +7,10 @@ import { LikeModule } from './like/like.module';
 import { ViewModule } from './view/view.module';
 import { FollowModule } from './follow/follow.module';
 import { BoardArticleModule } from './board-article/board-article.module';
+import { BoardArticleService } from './board-article/board-artice.service';
 
 @Module({
   imports: [MemberModule, PropertyModule, AuthModule, CommentModule, LikeModule, ViewModule, FollowModule, BoardArticleModule],
+  providers: [BoardArticleService],
 })
-export class ComponentsModule {}
+export class ComponentsModule { }
