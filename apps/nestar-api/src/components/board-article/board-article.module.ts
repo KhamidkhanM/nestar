@@ -7,6 +7,7 @@ import { Member } from '../../libs/dto/member/member';
 import { MemberModule } from '../member/member.module';
 import { ViewModule } from '../view/view.module';
 import { BoardArticleService } from './board-artice.service';
+import { LikeModule } from '../like/like.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { BoardArticleService } from './board-artice.service';
     ]),
     AuthModule,
     MemberModule,
-    ViewModule
+    ViewModule,
+    LikeModule,
   ],
   providers: [BoardArticleResolver, BoardArticleService],
   exports: [BoardArticleService],
