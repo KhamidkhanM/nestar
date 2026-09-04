@@ -2,7 +2,7 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CommentService } from './comment.service';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../auth/guards/auth.guard';
-import { type ObjectId } from 'mongoose';
+import { ObjectId } from 'bson';
 import { CommentInput, CommentsInquiry } from '../../libs/dto/comment/comment.input';
 import { Comment, Comments } from '../../libs/dto/comment/comment';
 import { AuthMember } from '../auth/decorators/authMember.decorator';

@@ -1,7 +1,8 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment, Comments } from '../../libs/dto/comment/comment';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
+import { ObjectId } from 'bson';
 import { MemberService } from '../member/member.service';
 import { ViewService } from '../view/view.service';
 import { PropertyService } from '../property/property.service';
