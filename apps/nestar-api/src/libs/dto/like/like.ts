@@ -1,38 +1,39 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { LikeGroup } from '../../enums/like.enum';
-import { ObjectId } from 'mongoose';
+import { ObjectId } from 'bson';
+
 
 @ObjectType()
 export class MeLiked {
 	@Field(() => String)
-	memberId: ObjectId;
+	memberId!: ObjectId;
 
 	@Field(() => String)
-	likeRefId: ObjectId;
+	likeRefId!: ObjectId;
 
 	@Field(() => Boolean)
-	myFavorite: boolean;
+	myFavorite!: boolean;
 }
 
 @ObjectType()
 export class Like {
 	@Field(() => String)
-	_id: ObjectId;
+	_id!: ObjectId;
 
 	@Field(() => LikeGroup)
-	likeGroup: LikeGroup;
+	likeGroup!: LikeGroup;
 
 	@Field(() => String)
-	likeRefId: ObjectId;
+	likeRefId!: ObjectId;
 
 	@Field(() => String)
-	memberId: ObjectId;
+	memberId!: ObjectId;
 
 	@Field(() => Date)
-	createdAt: Date;
+	createdAt!: Date;
 
 	@Field(() => Date)
-	updatedAt: Date;
+	updatedAt!: Date;
 }
 
 
