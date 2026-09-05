@@ -18,14 +18,14 @@ export class FollowInquiry {
 	@IsNotEmpty()
 	@Min(1)
 	@Field(() => Int)
-	page: number;
+	page!: number;
 
 	@IsNotEmpty()
 	@Min(1)
 	@Field(() => Int)
-	limit: number;
+	limit!: number;
 
 	@IsNotEmpty()
 	@Field(() => FollowSearch)
-	search: FollowSearch;
+	search!: FollowSearch;
 }
