@@ -4,15 +4,17 @@ import { MaxFileSizeValidator, ValidationPipe } from '@nestjs/common';
 import { LoggingInterceptor } from './libs/interceptor/logging.interceptor';
 import { graphqlUploadExpress } from 'graphql-upload';
 import * as express from 'express';
+import { mkdirSync } from 'fs';
 import { WsAdapter } from '@nestjs/platform-ws';
 
 
 async function bootstrap() {
+  ['member', 'property', 'article'].forEach((dir) => mkdirSync(`uploads/${dir}`, { recursive: true }));
   const app = await NestFactory.create(AppModule);
   app.useWebSocketAdapter(new WsAdapter(app));
   app.use(graphqlUploadExpress(({ fileSize: 15000000, files: 10 })));
   app.useGlobalPipes(new ValidationPipe());
-  app.use(/uploads/, express.static('uploads')); // Serve static files from the "uploads" directory to the "/uploads" route
+  app.use('/uploads', express.static('uploads')); // Serve static files from the "uploads" directory to the "/uploads" route
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.enableCors({ origin: true, credentials: true });
   await app.listen(process.env.PORT_API ?? 3000);

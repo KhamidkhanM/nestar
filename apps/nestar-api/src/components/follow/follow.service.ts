@@ -84,8 +84,7 @@ export class FollowService {
                         metaCounter: [{ $count: 'total' }],
                     },
                 },
-            ])
-            .exec();
+            ]).exec();
         if (!result.length) throw new InternalServerErrorException(Message.NO_DATA_FOUND);
 
         return result[0];

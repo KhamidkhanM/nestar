@@ -80,10 +80,11 @@ export class MemberResolver {
     @Mutation(() => String)
     public async imageUploader(
         @Args({ name: 'file', type: () => GraphQLUpload })
-        { createReadStream, filename, mimetype }: FileUpload,
+        file: Promise<FileUpload> | FileUpload, // union keeps ValidationPipe from instantiating Promise
         @Args('target') target: String,
     ): Promise<string> {
         console.log('Mutation: imageUploader');
+        const { createReadStream, filename, mimetype } = await file;
         console.log('filename =>', filename, 'mimetype =>', mimetype);
 
         if (!filename) throw new Error(Message.UPLOAD_FAILED);
